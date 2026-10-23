@@ -77,13 +77,36 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;min-height:48px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.fl.grown .bloom-glow{transition:none}}
 /* SVG garden controls: remove rectangular browser focus boxes.
    Keep a rounded focus indicator on the interactive SVG hit areas for keyboard users. */
-.fl:focus,.gift:focus,.bf:focus{outline:none}
-.fl:focus-visible .hit,.gift:focus-visible .hit,.bf:focus-visible .hit{
-  stroke:var(--acc);
-  stroke-width:3;
-  outline:none;
+/* Stop browser-generated rectangular focus rings on SVG groups.
+   The interactive SVG groups still work with touch, mouse, Enter and Space. */
+.scene .fl,
+.scene .gift,
+.scene .bf,
+.scene .fl:focus,
+.scene .gift:focus,
+.scene .bf:focus,
+.scene .fl:focus-visible,
+.scene .gift:focus-visible,
+.scene .bf:focus-visible {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
 }
-.fl .hit,.gift .hit,.bf .hit{vector-effect:non-scaling-stroke}
+
+/* Keyboard users get a rounded indicator around the actual hit target,
+   rather than a rectangle around the entire SVG group. */
+.scene .fl:focus-visible .hit,
+.scene .gift:focus-visible .hit,
+.scene .bf:focus-visible .hit {
+  stroke: var(--acc);
+  stroke-width: 3;
+  outline: none !important;
+  vector-effect: non-scaling-stroke;
+}
+.scene .fl .hit,
+.scene .gift .hit,
+.scene .bf .hit {
+  vector-effect: non-scaling-stroke;
+}
 .fl{transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite}
 .bf{transition:transform 1.3s ease-in-out}
 .bub{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
