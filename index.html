@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bloom + Magic Box 🌷</title>
+<style>
+:root{--bg:#fff3ec;--card:#fffaf7;--ink:#4a2545;--soft:#7a5576;--pink:#ffd1e1;--lav:#e6dcff;--peach:#ffdcc7;--acc:#8a3f7a;--onacc:#fff;--line:#f0d3e0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#26142d;--card:#38203f;--ink:#fbe9f3;--soft:#d9b8d0;--pink:#5a2a54;--lav:#43305e;--peach:#5b3340;--acc:#f3b6d6;--onacc:#26142d;--line:#553060}}
+:root[data-theme="dark"]{--bg:#26142d;--card:#38203f;--ink:#fbe9f3;--soft:#d9b8d0;--pink:#5a2a54;--lav:#43305e;--peach:#5b3340;--acc:#f3b6d6;--onacc:#26142d;--line:#553060}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 ui-rounded,"Nunito","Quicksand","Segoe UI",system-ui,sans-serif;min-height:100vh;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+h1,h2{font-family:"Georgia","Iowan Old Style",serif;line-height:1.15;margin:.2em 0 .4em;letter-spacing:-.01em}
+h1{font-size:clamp(2rem,8vw,3.2rem)}h2{font-size:clamp(1.5rem,5.5vw,2rem)}
+p{margin:.4em 0}
+main{max-width:760px;margin:0 auto;padding:20px 16px 110px;position:relative;z-index:1}
+.view{display:none}.view.on{display:block;animation:in .35s ease both}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+button{font:inherit;color:inherit;cursor:pointer;border:0;min-height:48px}
+:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+.btn{background:var(--acc);color:var(--onacc);padding:12px 22px;border-radius:999px;font-weight:700;box-shadow:0 4px 0 rgba(74,37,69,.22);transition:transform .12s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(74,37,69,.22)}
+.btn.alt{background:var(--lav);color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0}
+.center{text-align:center;justify-content:center}
+.hero{text-align:center;padding-top:6vh}
+.hero p{max-width:34ch;margin:.8em auto;font-size:1.1rem;color:var(--soft)}
+.sway{animation:sway 4s ease-in-out infinite;transform-origin:50% 100%;width:150px;height:150px}
+@keyframes sway{50%{transform:rotate(5deg) scale(1.04)}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+.mood{border-radius:24px;padding:18px 14px;text-align:left;min-height:118px;display:flex;flex-direction:column;gap:4px;box-shadow:0 6px 18px rgba(138,63,122,.13);transition:transform .15s}
+.mood:active{transform:scale(.97)}
+.mood b{font-size:1.05rem}.mood span{font-size:1.9rem}.mood small{color:var(--soft);font-size:.85rem;line-height:1.3}
+.m0{background:var(--peach)}.m1{background:var(--pink)}.m2{background:var(--lav)}.m3{background:var(--peach)}.m4{background:var(--pink)}.m5{background:var(--lav)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:26px;padding:20px;margin:16px 0;box-shadow:0 8px 24px rgba(138,63,122,.12);font-size:1.1rem}
+.card.pop{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{transform:scale(.85) rotate(-2deg);opacity:0}}
+.tag{display:inline-block;background:var(--lav);padding:3px 12px;border-radius:999px;font-size:.85rem;font-weight:700;margin-bottom:6px}
+.big{font-size:5rem;text-align:center;animation:bob 1.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px) rotate(4deg)}}
+.back{background:none;color:var(--soft);padding:6px 0;text-decoration:underline;min-height:44px}
+.sub{color:var(--soft);margin-top:-.2em}
+.env{background:var(--card);border:2px dashed var(--acc);border-radius:18px;padding:12px;text-align:left;flex:1 1 150px;font-weight:600}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;justify-content:flex-start}
+.chip{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:6px 14px;white-space:nowrap;flex:none}
+.chip[aria-pressed="true"]{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
+.boxwrap{display:flex;justify-content:center;margin:10px 0}
+.box{background:none;width:200px;height:200px;position:relative;padding:0;animation:bob 2.6s ease-in-out infinite}
+.box svg{width:100%;height:100%;overflow:visible}
+.lid{transform-origin:30px 70px;transition:transform .6s cubic-bezier(.3,1.5,.5,1)}
+.box.open{animation:shake .5s}.box.open .lid{transform:translate(-14px,-44px) rotate(-24deg)}
+.spark{opacity:0;transition:opacity .3s .3s}.box.open .spark{opacity:1}
+@keyframes shake{25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+.scene{width:100%;height:auto;border-radius:26px;background:linear-gradient(#e6dcff,#ffe9f1 60%,#d9f0d0 60%);display:block}
+.fl,.gift,.bf{cursor:pointer}
+.fl:focus-visible .hit,.gift:focus-visible .hit,.bf:focus-visible .hit{stroke:var(--acc);stroke-width:3;outline:none}
+.fl{transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite}
+.bf{transition:transform 1.3s ease-in-out}
+.bub{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.b{aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,var(--lav) 45%,var(--pink));box-shadow:inset -4px -4px 10px rgba(138,63,122,.2);transition:transform .2s,opacity .2s;min-height:48px}
+.b.x{transform:scale(1.5);opacity:0;pointer-events:none}
+.petals{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.petals i{position:absolute;top:-30px;font-style:normal;opacity:.55;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--card);border-top:2px solid var(--line);display:flex;justify-content:center;gap:4px;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;max-width:200px;background:none;border-radius:16px;font-size:.85rem;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:0;line-height:1.2;padding:4px 6px}
+nav button span{font-size:1.4rem}
+nav button[aria-current="page"]{background:var(--lav)}
+.toast{min-height:3.2em;text-align:center;font-weight:600;margin:10px 0}
+@media (min-width:700px){body{font-size:19px}.grid{grid-template-columns:repeat(3,1fr)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.petals{display:none}}
+</style>
+</head>
+<body>
+<div class="petals" aria-hidden="true"></div>
+<main>
+<!-- WELCOME -->
+<section class="view on" id="v-home" aria-labelledby="t-home">
+<div class="hero">
+<svg class="sway" viewBox="0 0 120 120" aria-hidden="true" id="heroFlower"></svg>
+<h1 id="t-home" tabindex="-1"></h1>
+<p id="welcome"></p>
+<div class="row center"><button class="btn" data-go="bloom" id="b-explore"></button><button class="btn alt" data-go="magic" id="b-surprise"></button></div>
+</div>
+</section>
+
+<!-- BLOOM -->
+<section class="view" id="v-bloom" aria-labelledby="t-bloom">
+<h2 id="t-bloom" tabindex="-1">What are you in the mood for?</h2>
+<p class="sub">Pick anything. Skip anything. No pressure. 🌸</p>
+<div class="grid" id="moods"></div>
+<h2 style="font-size:1.3rem">Little envelopes 💌</h2>
+<div class="row" id="envs"></div>
+<div class="card" id="envCard" hidden aria-live="polite"></div>
+</section>
+
+<!-- FEED (laugh / comfort / brain) -->
+<section class="view" id="v-feed" aria-labelledby="t-feed">
+<button class="back" data-go="bloom">← Back to Bloom</button>
+<h2 id="t-feed" tabindex="-1"></h2>
+<div class="card" id="feedCard" aria-live="polite"></div>
+<div class="row"><button class="btn" id="feedNext">Another one</button><button class="btn alt" data-go="bloom">Take me somewhere else 🌷</button></div>
+</section>
+
+<!-- PLAY -->
+<section class="view" id="v-play" aria-labelledby="t-play">
+<button class="back" data-go="bloom">← Back to Bloom</button>
+<h2 id="t-play" tabindex="-1">Let’s play 🎨</h2>
+<p class="sub">Tap the petals to recolor your flower. Tap the middle to shuffle everything.</p>
+<svg id="paint" viewBox="0 0 200 200" style="width:min(260px,80%);display:block;margin:auto" role="group" aria-label="Flower to color"></svg>
+<h2 style="font-size:1.3rem;margin-top:1.2em">Pop the bubbles 🫧</h2>
+<div class="bub" id="bubs"></div>
+<p class="toast" id="bubMsg" aria-live="polite"></p>
+</section>
+
+<!-- CUTE / GARDEN -->
+<section class="view" id="v-cute" aria-labelledby="t-cute">
+<button class="back" data-go="bloom">← Back to Bloom</button>
+<h2 id="t-cute" tabindex="-1">Your tiny garden 🌷</h2>
+<p class="sub">Tap the flowers, chase the butterfly, and find the hidden gift.</p>
+<svg class="scene" id="garden" viewBox="0 0 320 210" role="group" aria-label="Interactive garden"></svg>
+<p class="toast" id="gmsg" aria-live="polite">Tap a flower to start 🌼</p>
+<div class="row center"><button class="btn" id="cuteBtn">Show me a cutie 🐱</button></div>
+<div class="card" id="cuteCard" hidden aria-live="polite"></div>
+</section>
+
+<!-- MAGIC BOX -->
+<section class="view" id="v-magic" aria-labelledby="t-magic">
+<h2 id="t-magic" tabindex="-1" style="text-align:center">Magic Box 🎁</h2>
+<p class="sub" style="text-align:center">Pick a flavor or leave it on Wildcard, then tap the box.</p>
+<div class="chips" id="chips" role="group" aria-label="Surprise type"></div>
+<div class="boxwrap"><button class="box" id="box" aria-label="Open the magic box">
+<svg viewBox="0 0 160 160" aria-hidden="true">
+<rect x="30" y="70" width="100" height="80" rx="10" fill="#ff9bbd"/><rect x="72" y="70" width="16" height="80" fill="#ffe08a"/>
+<g class="lid"><rect x="22" y="48" width="116" height="26" rx="10" fill="#c9a7ff"/><rect x="72" y="48" width="16" height="26" fill="#ffe08a"/>
+<path d="M80 48c-22-26-38-8-18 0zM80 48c22-26 38-8 18 0z" fill="#ffe08a" stroke="#e0b84a" stroke-width="2"/></g>
+<g class="spark" fill="#ffd166"><path d="M30 30l4 9 9 4-9 4-4 9-4-9-9-4 9-4z"/><path d="M130 20l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/><circle cx="80" cy="12" r="4"/></g></svg></button></div>
+<div class="card" id="magicCard" aria-live="polite"><span class="tag">Ready?</span><p>Tap the box to see what’s inside. 🎀</p></div>
+<div class="row center" id="magicActs" hidden><button class="btn" id="again">Another surprise 🎁</button><button class="btn alt" data-go="bloom">Take me somewhere else 🌷</button></div>
+</section>
+</main>
+
+<nav aria-label="Main">
+<button data-go="home"><span aria-hidden="true">🏠</span>Home</button>
+<button data-go="bloom"><span aria-hidden="true">🌷</span>Bloom</button>
+<button data-go="magic"><span aria-hidden="true">🎁</span>Magic Box</button>
+</nav>
+
+<script>
+/* ============ CONTENT (edit anything here) ============ */
+const C={
+welcome:{title:"Hey, you! 🌷",text:"Welcome to your tiny corner of happiness. I prepared a few little things for you—some cute, some ridiculous, and some that might make you smile. No tasks, no pressure. Just explore whatever you feel like.",explore:"Let’s explore 🌷",surprise:"Surprise me 🎁"},
+moods:[
+{id:"laugh",e:"😂",t:"Make me laugh",d:"Jokes & silly news"},
+{id:"comfort",e:"🧸",t:"I need comfort",d:"Gentle little notes"},
+{id:"brain",e:"🧠",t:"Entertain my brain",d:"Facts & riddles"},
+{id:"play",e:"🎨",t:"Let me play",d:"Color & pop things"},
+{id:"cute",e:"🌷",t:"Show me something cute",d:"Garden & cuties"},
+{id:"magic",e:"🎁",t:"Surprise me",d:"Open the Magic Box"}],
+envelopes:[
+{l:"Open when you need a smile 😊",t:"You are the kind of person people are glad to have around. Also, you’re a great reason for snacks to exist. 🍪"},
+{l:"Open when you’re bored 🥱",t:"Quest: find the most ridiculous object near you and give it a fancy title. Mine would be “Sir Remote of Lost Batteries.”"},
+{l:"Open when you want something cute 🐰",t:"🐰 A tiny bunny just hopped through your screen and left you a clover. Take it. It’s yours. 🍀"},
+{l:"Open when you want to rest 🌙",t:"Permission slip: you may lie down, grab something cozy, and do absolutely nothing. Signed, Your Friend. ✅"}],
+garden:["You’re doing better than you think. 🌸","Fun fact: young sunflowers follow the sun across the sky. 🌻","Soft blankets, warm drinks, silly videos: all valid choices today. ☕","Tiny reminder: you are really, really likable. 💜","This flower voted you Friend of the Year. 🏆"],
+rare:["🌟 RARE FIND! You’ve unlocked the Golden Cookie. Legend says it grants one free nap and zero guilt. 🍪✨","🦄 A unicorn passed by and said you have excellent vibes. Official unicorn stamp: ✔","💎 Super rare: a pocket-sized hug, delivered digitally. Hold on tight. 🤗"],
+items:{
+funny:[
+"🚨 EMERGENCY ANNOUNCEMENT 🚨 You’ve officially been promoted to Chief Executive Officer of Doing Absolutely Nothing. Your responsibilities: (1) be comfortable, (2) ignore unnecessary responsibilities for a little while, and (3) accept this extremely prestigious promotion. Your imaginary salary is one million cookies. 🍪",
+"Why did the scarecrow win an award? Because he was outstanding in his field. 🌾",
+"Breaking news: local blanket burrito declared a national monument. Visitors are encouraged to stay for hours. 🌯",
+"Weather forecast: 100% chance of snacks, with scattered naps in the afternoon. 🌦️",
+"Why don’t eggs tell jokes? They’d crack each other up. 🥚",
+"Official notice: you are excused from adulting until further notice. Valid for one snack and a nap. 📜",
+"What do you call a sleeping bull? A bulldozer. 🐂💤",
+"The pillow union has announced a strike. Their demands: more cuddles and fewer alarm clocks. 🛏️",
+"I told my phone I needed space. Now it just shows me ads about the moon. 🌙",
+"Why did the cookie go to the doctor? It felt crummy. 🍪"],
+sweet:[
+"You make ordinary days feel lighter just by being in them. Thank you for being you. 💜",
+"Reminder: you don’t have to be productive to be valuable. 🌷",
+"If kindness were a flower, you’d be a whole garden. 🌼",
+"You are allowed to take it slow today. The world can wait a bit. 🐢",
+"Your laugh is one of the nicest sounds ever. Just saying. 😊",
+"No reply needed. Just wanted you to know someone is cheering for you. 📣",
+"You’re stronger than you give yourself credit for, and softer than you think you’re allowed to be. 🫶",
+"Being cozy is a full-time job and you’re excellent at it. 🧸",
+"Today, you get to be gentle with yourself. That’s the whole assignment. ☁️"],
+fact:[
+"Octopuses have three hearts. 🐙",
+"Honey found in ancient Egyptian tombs was still edible after thousands of years. 🍯",
+"A group of flamingos is called a flamboyance. 🦩",
+"Wombat poop is cube-shaped. Yes, really. 🟫",
+"Sea otters sometimes hold hands while they sleep so they don’t drift apart. 🦦",
+"Butterflies can taste with their feet. 🦋",
+"Bananas are botanically berries, but strawberries are not. 🍌",
+"Dolphins call each other using signature whistles, like names. 🐬",
+"A day on Venus is longer than a year on Venus. 🪐",
+"Some penguins give their partners a pebble as a gift. 🐧"],
+riddle:[
+["What has hands but can’t clap?","A clock. ⏰"],
+["What gets wetter the more it dries?","A towel. 🛁"],
+["What has keys but no locks?","A piano. 🎹"],
+["What can you catch but never throw?","A cold. 🤧"],
+["What has many teeth but never bites?","A comb. 💇"],
+["What is full of holes but still holds water?","A sponge. 🧽"],
+["I’m tall when I’m young and short when I’m old. What am I?","A candle. 🕯️"],
+["What has a neck but no head?","A bottle. 🍾"]],
+cute:[
+["🐱","This cat has decided you are its favorite human. No refunds."],
+["🐶","Good dog! Reporting for cuddle duty."],
+["🐰","Bunny says: take a deep breath, then a snack."],
+["🦆","Tiny duck waddles by. Quack of approval."],
+["🐼","Panda is rolling downhill. Nobody knows why. It’s perfect."],
+["🦊","Fox tucked a flower behind its ear for you."],
+["🐹","Hamster stuffed its cheeks. It is very proud."],
+["🐥","A baby chick says: peep. (Translation: you’re great.)"]],
+challenge:[
+"Tiny mission: take three slow breaths, and then pick a snack. 🍪",
+"Name three things nearby that are your favorite color. 🎨",
+"Invent a name for a pet you’ll never own. Mine is Sir Fluffington. 🐾",
+"Hum a few lines of a song you love. Bonus points for dramatic flair. 🎤",
+"Stretch your arms up like a happy cat. Yawning is encouraged. 🐈",
+"Take a sip of something nice to drink. 💧",
+"Send a silly emoji to someone who’d like it. 📱",
+"Make the world’s most dramatic ‘ta-da’ pose. Hold for 5 seconds. ✨"]}
+};
+const TAG={funny:"😂 Funny",sweet:"💌 Sweet",fact:"🧠 Did you know?",riddle:"🧩 Riddle",cute:"🐱 Cute",challenge:"🎮 Mini challenge",rare:"✨ Rare find",env:"💌 Opened!"};
+
+/* ============ ENGINE ============ */
+const $=(s,e=document)=>e.querySelector(s),$$=(s,e=document)=>[...e.querySelectorAll(s)];
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const ITEMS={};for(const k in C.items)ITEMS[k]=C.items[k].map(v=>({k,v}));
+ITEMS.brain=[...ITEMS.fact,...ITEMS.riddle];ITEMS.wild=Object.keys(C.items).flatMap(k=>ITEMS[k]);
+const bags={};
+function pick(key){const b=bags[key]||(bags[key]={p:[],l:null});
+if(!b.p.length){b.p=shuffle([...ITEMS[key]]);if(b.p.length>1&&b.p[b.p.length-1]===b.l)b.p.reverse()}
+return b.l=b.p.pop()}
+function render(el,o){const{k,v}=o;let h=`<span class="tag">${TAG[k]}</span>`;
+if(k==="riddle")h+=`<p>${v[0]}</p><button class="btn alt rv">Reveal the answer 🔎</button><p class="ans" hidden><b>${v[1]}</b></p>`;
+else if(k==="cute")h+=`<div class="big" aria-hidden="true">${v[0]}</div><p>${v[1]}</p>`;
+else h+=`<p>${v}</p>`;
+el.innerHTML=h;el.hidden=false;el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop");
+const r=$(".rv",el);if(r)r.onclick=()=>{$(".ans",el).hidden=false;r.hidden=true}}
+
+/* ============ NAVIGATION ============ */
+const NAVMAP={home:"home",bloom:"bloom",feed:"bloom",play:"bloom",cute:"bloom",magic:"magic"};
+function go(v){$$(".view").forEach(s=>s.classList.toggle("on",s.id==="v-"+v));
+$$("nav button").forEach(b=>b.toggleAttribute("aria-current",b.dataset.go===NAVMAP[v]));
+$$("nav button").forEach(b=>{if(b.dataset.go===NAVMAP[v])b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+scrollTo(0,0);const h=$("#v-"+v+" h1,#v-"+v+" h2");if(h)h.focus({preventScroll:true})}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)});
+
+/* ============ WELCOME ============ */
+$("#t-home").textContent=C.welcome.title;$("#welcome").textContent=C.welcome.text;
+$("#b-explore").textContent=C.welcome.explore;$("#b-surprise").textContent=C.welcome.surprise;
+function flower(cx,cy,r,col,n=6){let s="";for(let i=0;i<n;i++){const a=i*2*Math.PI/n;s+=`<circle cx="${(cx+Math.cos(a)*r).toFixed(1)}" cy="${(cy+Math.sin(a)*r).toFixed(1)}" r="${r*.78}" fill="${col}"/>`}
+return s+`<circle cx="${cx}" cy="${cy}" r="${r*.7}" fill="#ffd166"/>`}
+$("#heroFlower").innerHTML=`<rect x="58" y="62" width="4" height="58" rx="2" fill="#8fc98a"/><ellipse cx="72" cy="98" rx="14" ry="6" fill="#8fc98a" transform="rotate(-25 72 98)"/>`+flower(60,48,17,"#ff9bbd");
+$(".petals").innerHTML=["🌸","🌷","✨","🌼","💜","🌸","✨","🌷"].map((p,i)=>`<i style="left:${i*13+3}%;font-size:${14+i%3*6}px;animation-duration:${11+i*2}s;animation-delay:-${i*3}s">${p}</i>`).join("");
+
+/* ============ BLOOM HOME ============ */
+$("#moods").innerHTML=C.moods.map((m,i)=>`<button class="mood m${i}" data-mood="${m.id}"><span aria-hidden="true">${m.e}</span><b>${m.t}</b><small>${m.d}</small></button>`).join("");
+let feedKey="funny";const FT={laugh:["Make me laugh 😂","funny"],comfort:["Comfort corner 🧸","sweet"],brain:["Brain snacks 🧠","brain"]};
+$("#moods").onclick=e=>{const b=e.target.closest("[data-mood]");if(!b)return;const id=b.dataset.mood;
+if(FT[id]){feedKey=FT[id][1];$("#t-feed").textContent=FT[id][0];render($("#feedCard"),pick(feedKey));go("feed")}else go(id)};
+$("#feedNext").onclick=()=>render($("#feedCard"),pick(feedKey));
+$("#envs").innerHTML=C.envelopes.map((n,i)=>`<button class="env" data-i="${i}">${n.l}</button>`).join("");
+$("#envs").onclick=e=>{const b=e.target.closest("[data-i]");if(b){render($("#envCard"),{k:"env",v:C.envelopes[b.dataset.i].t});$("#envCard").scrollIntoView({behavior:RM?"auto":"smooth",block:"nearest"})}};
+
+/* ============ PLAY ============ */
+const PAL=["#ff9bbd","#c9a7ff","#ffb48a","#ffd166","#8fd9c4","#ff6f91"];let pc=[0,1,2,3,4,5];
+function paint(){let s="";pc.forEach((c,i)=>{s+=`<g role="button" tabindex="0" class="pt" data-i="${i}" aria-label="Petal ${i+1}, tap to change color"><ellipse cx="100" cy="52" rx="24" ry="38" fill="${PAL[c]}" transform="rotate(${i*60} 100 100)"/></g>`});
+s+=`<g role="button" tabindex="0" class="pt" data-i="c" aria-label="Flower center, tap to shuffle all colors"><circle cx="100" cy="100" r="24" fill="#ffd166"/></g>`;$("#paint").innerHTML=s}
+function paintTap(t){const g=t.closest(".pt");if(!g)return;const i=g.dataset.i;
+if(i==="c")pc=pc.map(()=>Math.floor(Math.random()*PAL.length));else pc[i]=(pc[i]+1)%PAL.length;paint();const n=$(`.pt[data-i="${i}"]`);if(n)n.focus()}
+$("#paint").onclick=e=>paintTap(e.target);
+$("#paint").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();paintTap(e.target)}};
+paint();
+let popped=0;function bubbles(){popped=0;$("#bubMsg").textContent="";$("#bubs").innerHTML=Array.from({length:12},(_,i)=>`<button class="b" aria-label="Bubble ${i+1}, tap to pop"></button>`).join("")}
+$("#bubs").onclick=e=>{const b=e.target.closest(".b");if(!b||b.classList.contains("x"))return;b.classList.add("x");b.disabled=true;
+if(++popped===12){$("#bubMsg").innerHTML="All popped! 🎉 <button class='btn alt' id='more'>Blow more bubbles 🫧</button>";$("#more").onclick=bubbles}};
+bubbles();
+
+/* ============ GARDEN ============ */
+const FX=[[34,120,"#ff9bbd"],[92,138,"#c9a7ff"],[150,118,"#ffb48a"],[208,140,"#ff9bbd"],[262,122,"#c9a7ff"]];let gi=0;
+$("#garden").innerHTML=`<circle cx="280" cy="35" r="18" fill="#ffe9a8"/>`+
+FX.map((f,i)=>`<g class="fl" role="button" tabindex="0" data-f="${i}" aria-label="Flower ${i+1}, tap for a message" style="animation-delay:-${i}s"><rect x="${f[0]-2}" y="${f[1]+4}" width="4" height="${200-f[1]}" rx="2" fill="#7fbf7a"/>${flower(f[0],f[1],11,f[2],5)}<circle class="hit" cx="${f[0]}" cy="${f[1]}" r="24" fill="transparent"/></g>`).join("")+
+`<g class="bf" id="bf" role="button" tabindex="0" aria-label="Butterfly, tap to make it fly" style="transform:translate(60px,40px)"><ellipse cx="-7" cy="-3" rx="8" ry="10" fill="#ff9bbd"/><ellipse cx="7" cy="-3" rx="8" ry="10" fill="#c9a7ff"/><rect x="-1.5" y="-8" width="3" height="16" rx="1.5" fill="#4a2545"/><circle class="hit" r="22" fill="transparent"/></g>`+
+`<g class="gift" role="button" tabindex="0" data-gift="1" aria-label="Hidden gift, tap to open the Magic Box"><text x="292" y="200" font-size="26" text-anchor="middle">🎁</text><circle class="hit" cx="292" cy="192" r="20" fill="transparent"/></g>`;
+function gTap(t){const g=t.closest("[data-f],#bf,[data-gift]");if(!g)return;
+if(g.dataset.gift)return go("magic");
+if(g.id==="bf"){g.style.transform=`translate(${30+Math.random()*250}px,${25+Math.random()*80}px)`;$("#gmsg").textContent="The butterfly flutters away 🦋";return}
+$("#gmsg").textContent=C.garden[gi++%C.garden.length]}
+$("#garden").onclick=e=>gTap(e.target);
+$("#garden").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();gTap(e.target)}};
+$("#cuteBtn").onclick=()=>render($("#cuteCard"),pick("cute"));
+
+/* ============ MAGIC BOX ============ */
+const CH=[["wild","🌈 Wildcard"],["funny","😂 Funny"],["sweet","💌 Sweet"],["fact","🧠 Interesting"],["riddle","🧩 Riddle"],["cute","🐱 Cute"],["challenge","🎮 Challenge"]];let mk="wild",busy=false;
+$("#chips").innerHTML=CH.map(c=>`<button class="chip" data-c="${c[0]}" aria-pressed="${c[0]==="wild"}">${c[1]}</button>`).join("");
+$("#chips").onclick=e=>{const b=e.target.closest(".chip");if(!b)return;mk=b.dataset.c;$$(".chip").forEach(x=>x.setAttribute("aria-pressed",x===b))};
+function openBox(){if(busy)return;busy=true;const box=$("#box");box.classList.remove("open");void box.offsetWidth;box.classList.add("open");
+setTimeout(()=>{const o=(Math.random()<.07)?{k:"rare",v:C.rare[Math.floor(Math.random()*C.rare.length)]}:pick(mk);
+render($("#magicCard"),o);$("#magicActs").hidden=false;busy=false;setTimeout(()=>box.classList.remove("open"),RM?0:700)},RM?0:850)}
+$("#box").onclick=openBox;$("#again").onclick=openBox;
+</script>
+</body>
+</html>
