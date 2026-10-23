@@ -23,6 +23,19 @@ main{max-width:760px;margin:0 auto;padding:20px 16px 110px;position:relative;z-i
 @keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 button{font:inherit;color:inherit;cursor:pointer;border:0;min-height:48px}
 :focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+/* Flower-colouring SVG: avoid rectangular browser focus rings around petal groups. */
+#paint .pt,
+#paint .pt:focus,
+#paint .pt:focus-visible {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+#paint .pt:focus-visible ellipse,
+#paint .pt:focus-visible circle {
+  stroke: var(--acc);
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+}
 .btn{background:var(--acc);color:var(--onacc);padding:12px 22px;border-radius:999px;font-weight:700;box-shadow:0 4px 0 rgba(74,37,69,.22);transition:transform .12s}
 .btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(74,37,69,.22)}
 .btn.alt{background:var(--lav);color:var(--ink)}
