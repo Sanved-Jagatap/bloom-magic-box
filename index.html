@@ -370,7 +370,7 @@ const PAL=["#ff9bbd","#c9a7ff","#ffb48a","#ffd166","#8fd9c4","#ff6f91"];let pc=[
 function paint(){let s="";pc.forEach((c,i)=>{s+=`<g role="button" tabindex="0" class="pt" data-i="${i}" aria-label="Petal ${i+1}, tap to change color"><ellipse cx="100" cy="52" rx="24" ry="38" fill="${PAL[c]}" transform="rotate(${i*60} 100 100)"/></g>`});
 s+=`<g role="button" tabindex="0" class="pt" data-i="c" aria-label="Flower center, tap to shuffle all colors"><circle cx="100" cy="100" r="24" fill="#ffd166"/></g>`;$("#paint").innerHTML=s}
 function paintTap(t){const g=t.closest(".pt");if(!g)return;const i=g.dataset.i;
-if(i==="c")pc=pc.map(()=>Math.floor(Math.random()*PAL.length));else pc[i]=(pc[i]+1)%PAL.length;paint();const n=$(`.pt[data-i="${i}"]`);if(n)n.focus()}
+if(i==="c")pc=pc.map(()=>Math.floor(Math.random()*PAL.length));else pc[i]=(pc[i]+1)%PAL.length;paint()}
 $("#paint").onclick=e=>paintTap(e.target);
 $("#paint").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();paintTap(e.target)}};
 paint();
