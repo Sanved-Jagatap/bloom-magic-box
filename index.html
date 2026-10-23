@@ -75,7 +75,15 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;min-height:48px}
 @media(max-width:380px){main{padding:14px 12px 104px}.row{gap:8px}.row .btn{padding:11px 15px}.card{padding:16px;border-radius:22px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.mood{padding:14px 11px;min-height:112px}.chips{margin-inline:-2px}.chip{padding:7px 12px;font-size:.9rem}.box{width:174px;height:174px}}
 @media(min-width:381px) and (max-width:699px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.fl.grown .bloom-glow{transition:none}}
-.fl:focus-visible .hit,.gift:focus-visible .hit,.bf:focus-visible .hit{stroke:var(--acc);stroke-width:3;outline:none}
+/* SVG garden controls: remove rectangular browser focus boxes.
+   Keep a rounded focus indicator on the interactive SVG hit areas for keyboard users. */
+.fl:focus,.gift:focus,.bf:focus{outline:none}
+.fl:focus-visible .hit,.gift:focus-visible .hit,.bf:focus-visible .hit{
+  stroke:var(--acc);
+  stroke-width:3;
+  outline:none;
+}
+.fl .hit,.gift .hit,.bf .hit{vector-effect:non-scaling-stroke}
 .fl{transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite}
 .bf{transition:transform 1.3s ease-in-out}
 .bub{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
